@@ -1,18 +1,32 @@
 import React from 'react'
 // get id from the url, use Hook --> useParams
 import { useParams } from 'react-router-dom';
-import products from '../products-and-images/products';
+//import products from '../products-and-images/products';
 import Rating  from '../components/Rating';
 import { Link } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 
 const ProductScreen = () => {
     // get id from url and renames it productId
     const { id: productId } = useParams();
     // fetch product at the meantime is hardcoded data
-    const product = products.find((x) => x._id === productId);
-    console.log("product fetch from ProductScreen.jsx", product);
+    //const product = products.find((x) => x._id === productId);
+    //console.log("product fetch from ProductScreen.jsx", product);
+    
+    // fetch product using axios
+    const [product, setProduct] = React.useState({});
+    React.useEffect(() => {
+        const fetchProduct = async () => {
+            const { data } = await axios.get(`/api/products/${productId}`);
+            setProduct(data);
+            console.log("product fetch from ProductScreen.jsx", data);
+        }
+        fetchProduct();
+    }
+    , []);
+
   return (
     <>
         <Link to='/' className='btn btn-light my-3'>
