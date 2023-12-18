@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import './assets/styles/index.css';
 import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
 import {
   BrowserRouter,
   createBrowserRouter,
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       // index={true} page
       <Route index={true} path="/" element={<HomeScreen />} />
+      <Route path="/product/:id" element={<ProductScreen />} />
     </Route>
      ) );
 
