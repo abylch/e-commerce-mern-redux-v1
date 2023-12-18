@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 // get id from the url, use Hook --> useParams
 import { useParams } from 'react-router-dom';
 //import products from '../products-and-images/products';
@@ -16,12 +16,12 @@ const ProductScreen = () => {
     //console.log("product fetch from ProductScreen.jsx", product);
     
     // fetch product using axios
-    const [product, setProduct] = React.useState({});
-    React.useEffect(() => {
+    const [product, setProduct] = useState({});
+    useEffect(() => {
         const fetchProduct = async () => {
             const { data } = await axios.get(`/api/products/${productId}`);
             setProduct(data);
-            console.log("product fetch from ProductScreen.jsx", data);
+            console.log("product axios get from ProductScreen.jsx", data);
         }
         fetchProduct();
     }

@@ -3,10 +3,7 @@ const products = require('./data/products');
 //configure path to the .env file
 const dotenv = require('dotenv').config({ path: '../.env' });
 const cors = require('cors');
-
-
-//const cors = require('cors');
-//const connectDB = require('./utils/dbConnection');
+const connectDB = require('./config/dbConnection');
 
 
 
@@ -14,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 
 // Connect to MongoDB
-// connectDB();
+connectDB();
 
 // Use CORS middleware
 app.use(cors());
