@@ -4,11 +4,30 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import './assets/styles/index.css';
+import HomeScreen from './screens/HomeScreen';
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider
+} from 'react-router-dom';
+
+// creates routes from elements
+const router = createBrowserRouter(
+    createRoutesFromElements(
+    <Route path="/" element={<App />}>
+      // index={true} page
+      <Route index={true} path="/" element={<HomeScreen />} />
+    </Route>
+     ) );
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    {/* instead of <App /> we can use {router} as a prop --> router={router} /> */}
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
