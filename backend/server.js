@@ -1,9 +1,15 @@
-const express = require('express');
-const products = require('./data/products');
+//const express = require('express');
+import express from 'express';
 //configure path to the .env file
-const dotenv = require('dotenv').config({ path: '../.env' });
-const cors = require('cors');
-const connectDB = require('./config/dbConnection');
+//const dotenv = require('dotenv').config({ path: '../.env' });
+import dotenv from 'dotenv';
+dotenv.config({ path: '../.env' });
+//const cors = require('cors');
+import cors from 'cors';
+//const connectDB = require('./config/dbConnection');
+import connectDB from './config/dbConnection.js';
+//import Product from router
+import productRoutes from './routes/productsRoutes.js';
 
 
 
@@ -26,14 +32,8 @@ app.get('/', (req, res) => {
 
 })
 
-app.get('/api/products', (req, res) => {
-    res.json(products);
-});
+app.use('/api/products', productRoutes);
 
-app.get('/api/products/:id', (req, res) => {
-    const product = products.find((p) => p._id === req.params.id);
-    res.json(product);
-});
 
 // Start the server
 app.listen(PORT, () => {

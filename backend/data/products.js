@@ -38,7 +38,7 @@ const products = [
     countInStock: 5,
     rating: 3,
     numReviews: 12,
-    isFeatured: true,
+    isFeatured: false,
     displayItem: true,
   },
   {
@@ -66,7 +66,7 @@ const products = [
     countInStock: 7,
     rating: 3.5,
     numReviews: 10,
-    isFeatured: true,
+    isFeatured: false,
     displayItem: true,
   },
   {
@@ -81,8 +81,9 @@ const products = [
     rating: 4,
     numReviews: 12,
     isFeatured: true,
-    displayItem: true,
+    displayItem: false,
   },
 ]
 
-module.exports = products;
+
+export default products;
