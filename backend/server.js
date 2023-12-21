@@ -10,6 +10,9 @@ import cors from 'cors';
 import connectDB from './config/dbConnection.js';
 //import Product from router
 import productRoutes from './routes/productsRoutes.js';
+import {notFound, errorHandler} from './middleware/errorMiddleware.js';
+
+
 
 
 
@@ -33,6 +36,10 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/products', productRoutes);
+
+//handle errors
+app.use(notFound);
+app.use(errorHandler);
 
 
 // Start the server

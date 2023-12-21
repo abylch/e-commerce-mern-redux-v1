@@ -13,6 +13,9 @@ import {
   Route,
   RouterProvider
 } from 'react-router-dom';
+// redux
+import { Provider } from 'react-redux';
+import store from './store';
 
 // creates routes from elements
 const router = createBrowserRouter(
@@ -28,8 +31,11 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* instead of <App /> we can use {router} as a prop --> router={router} /> */}
-    <RouterProvider router={router} />
+  {/* pasiing the storejs as a global prop the app */}
+    <Provider store={store}>
+      {/* instead of <App /> we can use {router} as a prop --> router={router} /> */}
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
