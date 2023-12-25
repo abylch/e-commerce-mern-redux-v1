@@ -11,7 +11,7 @@ import connectDB from './config/dbConnection.js';
 //import Product from router
 import productRoutes from './routes/productsRoutes.js';
 import {notFound, errorHandler} from './middleware/errorMiddleware.js';
-
+import userRoutes from './routes/userRoutes.js';
 
 
 
@@ -25,9 +25,9 @@ connectDB();
 // Use CORS middleware
 app.use(cors());
 
+// body parser middlewares
 // Parse JSON request body
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
@@ -36,6 +36,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 //handle errors
 app.use(notFound);
