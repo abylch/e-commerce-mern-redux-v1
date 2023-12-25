@@ -1,5 +1,6 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/userModel.js';
+import jwt from 'jsonwebtoken';
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
@@ -12,6 +13,21 @@ const authUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
+
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+          });
+      
+          // Set JWT as an HTTP-Only cookie in the server
+          res.cookie('jwt', token, {
+            httpOnly: true,
+            // secure for https, we only have https in production not in dev
+            secure: process.env.NODE_ENV !== 'development', // Use secure cookies in production, false
+            sameSite: 'strict', // Prevent CSRF attacks
+            maxAge: 60 * 60 * 1000, // 1 hour in milliseconds
+          });
+
+        // instead of passing the token to the user like in notes project, we save it in a http-cookie
         res.json({
         _id: user._id,
         name: user.name,

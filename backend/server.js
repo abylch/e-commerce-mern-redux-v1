@@ -12,6 +12,7 @@ import connectDB from './config/dbConnection.js';
 import productRoutes from './routes/productsRoutes.js';
 import {notFound, errorHandler} from './middleware/errorMiddleware.js';
 import userRoutes from './routes/userRoutes.js';
+import cookieParser from 'cookie-parser';
 
 
 
@@ -29,6 +30,9 @@ app.use(cors());
 // Parse JSON request body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// cookie parser middleware
+app.use(cookieParser());
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!, from e-Shop-Shop server');
