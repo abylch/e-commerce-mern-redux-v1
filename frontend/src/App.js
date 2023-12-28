@@ -8,11 +8,16 @@ import { Outlet } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Header from './components/Header';
 import Footer from './components/Footer';
+// npm i react-toastify
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const App = () => {
   return (
     <>
+      <ToastContainer />
       <Header />
       {/* p - sets padding across a container
       y - sets padding vertically across a container, that is both padding-top and padding-bottom
