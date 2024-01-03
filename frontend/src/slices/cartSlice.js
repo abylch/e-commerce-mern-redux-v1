@@ -39,6 +39,10 @@ const cartSlice = createSlice({
       state.shippingAddress = action.payload;
       localStorage.setItem('cart', JSON.stringify(state));
     },
+    savePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
+      localStorage.setItem('cart', JSON.stringify(state));
+    },
     // add the remove item from cart function
     removeFromCart: (state, action) => {
       // Filter out the item to remove from the cart
@@ -50,7 +54,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, saveShippingAddress } = cartSlice.actions;
+export const { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
