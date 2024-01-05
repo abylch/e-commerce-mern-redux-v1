@@ -4,6 +4,7 @@ import Order from '../models/orderModel.js';
 // @desc    Create new order
 // @route   POST /api/orders
 // @access  Private
+// TODO fix no token after an hour of login, use try catch redirect to login
 const addOrderItems = asyncHandler(async (req, res) => {
 
   const {
