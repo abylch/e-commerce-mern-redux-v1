@@ -8,6 +8,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
   // Read JWT from the 'jwt' cookie; verify token
   token = req.cookies.jwt;
+  console.log("token from authMiddleware: ", token);
 
   if (token) {
     try {

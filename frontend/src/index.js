@@ -13,9 +13,7 @@ import {
   Route,
   RouterProvider
 } from 'react-router-dom';
-// redux
-import { Provider } from 'react-redux';
-import store from './store';
+
 // screens
 import CartScreen from './screens/CartScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -24,6 +22,11 @@ import ShippingScreen from './screens/ShippingScreen';
 // Private screen 4 registered users
 import PrivateRoute from './components/PrivateRoute';
 import PaymentScreen from './screens/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import OrderScreen from './screens/OrderScreen';
+// redux
+import { Provider } from 'react-redux';
+import store from './store';
 
 // creates routes from elements
 const router = createBrowserRouter(
@@ -39,6 +42,8 @@ const router = createBrowserRouter(
       <Route path='' element={<PrivateRoute />}>
         <Route path='/shipping' element={<ShippingScreen />} />
         <Route path='/payment' element={<PaymentScreen />} />
+        <Route path='/placeorder' element={<PlaceOrderScreen />} />
+        <Route path='/order/:id' element={<OrderScreen />} />
       </Route>
     </Route>
      ) );

@@ -10,10 +10,10 @@ import cors from 'cors';
 import connectDB from './config/dbConnection.js';
 //import Product from router
 import productRoutes from './routes/productsRoutes.js';
-import {notFound, errorHandler} from './middleware/errorMiddleware.js';
 import userRoutes from './routes/userRoutes.js';
-import cookieParser from 'cookie-parser';
 import orderRoutes from './routes/orderRoutes.js';
+import {notFound, errorHandler} from './middleware/errorMiddleware.js';
+import cookieParser from 'cookie-parser';
 
 
 
@@ -25,7 +25,12 @@ const PORT = process.env.PORT || 3002;
 connectDB();
 
 // Use CORS middleware
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true, // Required for including cookies
+};
+
+app.use(cors(corsOptions));
 
 // body parser middlewares
 // Parse JSON request body
@@ -34,15 +39,14 @@ app.use(express.urlencoded({ extended: true }));
 // cookie parser middleware
 app.use(cookieParser());
 
-
-app.get('/', (req, res) => {
-    res.send('Hello World!, from e-Shop-Shop server');
-
-})
-
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Hello World!, from e-Shop-Shop server');
+
+})
 
 //handle errors
 app.use(notFound);

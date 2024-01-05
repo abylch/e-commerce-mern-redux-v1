@@ -1,36 +1,39 @@
-import React from 'react'
-// outlet on top
-// An <Outlet> should be used in parent route elements to render their child route elements.
-// This allows nested UI to show up when child routes are rendered.
-// If the parent route matched exactly, it will render a child index route or nothing,
-// if there is no index route.
-import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Container } from 'react-bootstrap';
+import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-// npm i react-toastify
+import { logout } from './slices/authSlice';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const expirationTime = localStorage.getItem('expirationTime');
+    if (expirationTime) {
+      const currentTime = new Date().getTime();
+      if (currentTime > expirationTime) {
+        dispatch(logout());
+      }
+    }
+  }, [dispatch]);
+
   return (
     <>
       <ToastContainer />
       <Header />
-      {/* p - sets padding across a container
-      y - sets padding vertically across a container, that is both padding-top and padding-bottom
-      x - sets padding horizontally across a container, that is both padding-left and padding-right */}
-      <main className="py-3">
+      <main className='py-3'>
         <Container>
           <Outlet />
         </Container>
       </main>
       <Footer />
     </>
-    
-  )
-}
+  );
+};
 
 export default App;

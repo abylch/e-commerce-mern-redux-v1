@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { apiSlice } from './slices/apiSlice.js';
+import { apiSlice } from './slices/apiSlice';
 import cartSliceReducer from './slices/cartSlice';
 // redux authentication reducer
 import authReducer from './slices/authSlice';
