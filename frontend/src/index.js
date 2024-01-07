@@ -27,6 +27,8 @@ import OrderScreen from './screens/OrderScreen';
 // redux
 import { Provider } from 'react-redux';
 import store from './store';
+// paypal
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 // creates routes from elements
 const router = createBrowserRouter(
@@ -55,7 +57,10 @@ root.render(
   {/* pasiing the storejs as a global prop the app */}
     <Provider store={store}>
       {/* instead of <App /> we can use {router} as a prop --> router={router} /> */}
-      <RouterProvider router={router} />
+      {/* paypal provider, we moved the router provider inside yhe paypal provider*/}
+      <PayPalScriptProvider deferLoading={true}>
+        <RouterProvider router={router} />
+      </PayPalScriptProvider>
     </Provider>
   </React.StrictMode>
 );
