@@ -7,7 +7,7 @@ import Product from "../components/Product";
 //import { useEffect, useState } from 'react';
 //we don't use axios no more, we gonna use the redux
 //import axios from 'axios';
-import { useGetProductsQuery } from '../slices/productSlice';
+import { useGetProductsQuery } from '../slices/productsApiSlice';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 

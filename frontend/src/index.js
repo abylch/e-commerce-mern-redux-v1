@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// eslint-disable-next-line
 import bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import './assets/styles/index.css';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import {
+  // eslint-disable-next-line
   BrowserRouter,
   createBrowserRouter,
   createRoutesFromElements,
@@ -32,13 +34,14 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 // admin and user page
 import ProfileScreen from './screens/ProfileScreen';
 import AdminRoute from './components/AdminRoute';
-import OrderListScreen from './screens/OrderListScreen';
+import OrderListScreen from './screens/admin/OrderListScreen';
+import ProductListScreen from './screens/admin/ProductListScreen';
 
 // creates routes from elements
 const router = createBrowserRouter(
     createRoutesFromElements(
     <Route path="/" element={<App />}>
-      // index={true} page
+      {/* index={true} page */}
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/product/:id" element={<ProductScreen />} />
       <Route path='/cart' element={<CartScreen />} />
@@ -54,6 +57,7 @@ const router = createBrowserRouter(
         {/* Admin users */}
         <Route path='' element={<AdminRoute />}>
           <Route path='/admin/orderlist' element={<OrderListScreen />} />
+          <Route path='/admin/productlist' element={<ProductListScreen />} />
         </Route>
       </Route>
     </Route>
