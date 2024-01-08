@@ -20,11 +20,11 @@ const protect = asyncHandler(async (req, res, next) => {
     } catch (error) {
       console.error(error);
       res.status(401);
-      throw new Error('Not authorized, token failed');
+      throw new Error('Not authorized, token failed, try login');
     }
   } else {
     res.status(401);
-    throw new Error('Not authorized, no token');
+    throw new Error('Not authorized, no token, try  login');
     res.redirect('/login'); // Redirect to login page when no token is present
   }
 });
@@ -35,7 +35,7 @@ const admin = (req, res, next) => {
     next();
   } else {
     res.status(401);
-    throw new Error('Not authorized as an admin');
+    throw new Error('Not authorized as an admin, login as admin');
     res.redirect('/login'); // Redirect to login page when no token is present
   }
 };
