@@ -1,6 +1,23 @@
 import express from "express";
 const router = express.Router();
-// for testing hardcoded data
+
+import {
+    getProducts,
+    getProductById,
+    createProduct,
+    updateProduct,
+  } from '../controllers/productController.js';
+import { protect, admin } from '../middleware/authMiddleware.js';
+
+
+router.route('/').get(getProducts).post(protect, admin, createProduct);
+router.route('/:id').get(getProductById);
+router.route('/:id').get(getProductById).put(protect, admin, updateProduct);
+
+
+  export default router;
+
+  // for testing hardcoded data
 //const products = require('./data/products');
 //import products from '../data/products.js';
 
@@ -11,12 +28,6 @@ const router = express.Router();
 
 // imports controllers
 // import { getProducts, getProductById }
-import {
-    getProducts,
-    getProductById,
-  } from '../controllers/productController.js';
-
-
 // we pass it to the productController
 // router.get(
 //     '/',
@@ -37,8 +48,3 @@ import {
 //       throw new Error('Product not found');
 //     })
 //   );
-
-router.route('/').get(getProducts);
-router.route('/:id').get(getProductById);
-
-  export default router;
