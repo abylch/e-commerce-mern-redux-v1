@@ -25,6 +25,7 @@ const protect = asyncHandler(async (req, res, next) => {
   } else {
     res.status(401);
     throw new Error('Not authorized, no token');
+    res.redirect('/login'); // Redirect to login page when no token is present
   }
 });
 
