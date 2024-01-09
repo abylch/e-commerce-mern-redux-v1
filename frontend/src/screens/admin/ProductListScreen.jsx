@@ -3,16 +3,18 @@ import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
-import { useGetProductsQuery, useCreateProductMutation } from '../../slices/productsApiSlice';
+import { useGetProductsQuery, useCreateProductMutation, useDeleteProductMutation, } from '../../slices/productsApiSlice';
 import { toast } from 'react-toastify';
 
 
 const ProductListScreen = () => {
   const { data: products, isLoading, error, } = useGetProductsQuery();
 
-  const deleteHandler = () => {
-    console.log('delete');
-  };
+  // const deleteHandler = () => {
+  //   console.log('delete');
+  // };
+  // admin delete product
+  const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
 
   // admin create product
   const [createProduct, { isLoading: loadingCreate }, refetch] = useCreateProductMutation();
@@ -28,6 +30,18 @@ const ProductListScreen = () => {
     }
   };
 
+  const deleteHandler = async (id) => {
+    if (window.confirm('Delete the product from database??')) {
+      try {
+        await deleteProduct(id);
+        toast.success('Product deleted successfully');
+        refetch();
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
+  }
+
   return (
     <>
       <Row className='align-items-center'>
@@ -40,6 +54,7 @@ const ProductListScreen = () => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
       {loadingCreate && <Loader />}
       {isLoading ? (
         <Loader />

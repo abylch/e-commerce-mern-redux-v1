@@ -42,8 +42,16 @@ export const productSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    // admin useDeleteProductMutation func (delete product)
+    deleteProduct: builder.mutation({
+      query: (productId) => ({
+        url: `${PRODUCTS_URL}/${productId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Product'], // for cache invalidation
+    }),
   }),
 });
 
 export const { useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation, 
-  useUpdateProductMutation, useUploadProductImageMutation } = productSlice;
+  useUpdateProductMutation, useUploadProductImageMutation, useDeleteProductMutation } = productSlice;
