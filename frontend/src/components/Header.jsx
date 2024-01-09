@@ -73,7 +73,7 @@ const Header = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              {/* only for admins */}
+              {/* only for admins Links */}
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title='Manage' id='adminmenu'>
                   <LinkContainer to='/admin/productlist'>
