@@ -4,13 +4,28 @@ import { Table, Button } from 'react-bootstrap';
 import { FaTrash, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
-import { useGetUsersQuery } from '../../slices/usersApiSlice';
+import { useGetUsersQuery, useDeleteUserMutation, } from '../../slices/usersApiSlice';
+import { toast } from 'react-toastify';
 
 const UserListScreen = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
+  const [deleteUser] = useDeleteUserMutation();
+
+  const cannotDeleteHandler = () => {
+    toast.error('Cannot delete the user admin, uncheck the admin box and try again');
+};
+
 
   const deleteHandler = async (id) => {
-    console.log('delete');
+    //console.log('delete');
+    if (window.confirm('delete the user from database??')) {
+        try {
+          await deleteUser(id);
+          refetch();
+        } catch (err) {
+          toast.error(err?.data?.message || err.error);
+        }
+      }
   };
 
   return (
@@ -49,7 +64,8 @@ const UserListScreen = () => {
                   )}
                 </td>
                 <td>
-                  {!user.isAdmin && (
+                {/* is admin condition does not show edit and delete */}
+                  {/* {!user.isAdmin && ( */}
                     <>
                       <LinkContainer
                         to={`/admin/user/${user._id}/edit`}
@@ -59,15 +75,25 @@ const UserListScreen = () => {
                           <FaEdit />
                         </Button>
                       </LinkContainer>
-                      <Button
+                      {user.isAdmin === true ? (
+                        <Button
+                        variant='danger'
+                        className='btn-sm'
+                        onClick={() => cannotDeleteHandler()}
+                      >
+                        <FaTrash style={{ color: 'red' }} />
+                      </Button>
+                      ) : (
+                        <Button
                         variant='danger'
                         className='btn-sm'
                         onClick={() => deleteHandler(user._id)}
                       >
                         <FaTrash style={{ color: 'white' }} />
                       </Button>
+                      )}
                     </>
-                  )}
+                  {/* )} */}
                 </td>
               </tr>
             ))}
