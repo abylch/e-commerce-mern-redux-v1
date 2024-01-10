@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 //import products from "../products-and-images/products"
 import {Row, Col} from "react-bootstrap";
 // import hardcoded db
@@ -12,7 +12,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { useParams } from 'react-router-dom';
 import Paginate from '../components/Paginate';
-
+import { toast } from 'react-toastify';
 
 // change the server url for render https://xxx-xxx-xxx.onrender.com
 // for local http://localhost:3001
@@ -22,11 +22,27 @@ const HomeScreen = () => {
   // product function states, use of Loader spinner when status isLoading
   //const { data: products, isLoading, error } = useGetProductsQuery();
   // replaced 4 pagination
-  const { pageNumber } = useParams();
+  const { pageNumber, keyword, } = useParams();
 
-  console.log(pageNumber);
+  //console.log("pageNumber from homeScreen", pageNumber);
+  console.log("keyword from homeScreen", keyword);
 
-  const { data, isLoading, error } = useGetProductsQuery({pageNumber});
+  const { data, isLoading, error } = useGetProductsQuery({keyword, pageNumber});
+
+  useEffect(() => {
+    const checkData = () => {
+      console.log("data from homeScreen.jsx", data);
+      if (data.pages === 0) {
+        toast.error("No products found, try search with other keyword");
+      }
+    };
+
+    // Call checkData function when data is available
+    if (data) {
+      checkData();
+    }
+  }, [data]); // Run this effect only when data changes
+
 
 // <Message color of the message red; variant:'danger'
   return (
@@ -44,12 +60,19 @@ const HomeScreen = () => {
             {/* {products.map((product) => ( //replaced 4 pagination  */}
             {data.products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
+                <Product product={product}
+                 />
               </Col>
             ))}
           </Row>
           {/* pagination line */}
-          <Paginate pages={data.pages} page={data.page} />
+          {/* <Paginate pages={data.pages} page={data.page} /> */}
+          {/* paginate withe search function keyword */}
+          <Paginate
+            pages={data.pages}
+            page={data.page}
+            keyword={keyword ? keyword : ''}
+          />
         </>
       )}
     </>

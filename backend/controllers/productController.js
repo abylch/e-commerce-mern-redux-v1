@@ -11,12 +11,31 @@ const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 12;
   const page = Number(req.query.pageNumber) || 1;
 
-  const count = await Product.countDocuments();
-  const products = await Product.find()
+  // const count = await Product.countDocuments();
+  // const products = await Product.find()
+  // search funtionality
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  console.log("keyword from productController.js ", keyword);
+
+
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
+
+  console.log("products from productController.js after Product.find({ ...keyword } ", products);
+
+
 });
 
 // @desc    Fetch single product
