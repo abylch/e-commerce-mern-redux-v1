@@ -5,11 +5,12 @@ export const productSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // useGetProductsQuery func
     getProducts: builder.query({
-      query: () => ({
+      query: ({ pageNumber }) => ({
         url: PRODUCTS_URL,
+        params: { pageNumber },
       }),
       keepUnusedDataFor: 5,
-      providesTags: ['Product'], // for cache invalidation
+      //providesTags: ['Product'], // for cache invalidation, removed in pagination
     }),
     // useGetProductDetailsQuery func
     getProductDetails: builder.query({

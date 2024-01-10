@@ -1,14 +1,27 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
-import { useGetProductsQuery, useCreateProductMutation, useDeleteProductMutation, } from '../../slices/productsApiSlice';
+import Paginate from '../../components/Paginate';
+import {
+  useGetProductsQuery,
+  useDeleteProductMutation,
+  useCreateProductMutation,
+} from '../../slices/productsApiSlice';
 import { toast } from 'react-toastify';
 
 
 const ProductListScreen = () => {
-  const { data: products, isLoading, error, } = useGetProductsQuery();
+  //const { data: products, isLoading, error, } = useGetProductsQuery();
+  // replaced 4 pagination
+  const { pageNumber } = useParams();
+
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    pageNumber,
+  });
+
 
   // const deleteHandler = () => {
   //   console.log('delete');
@@ -17,7 +30,7 @@ const ProductListScreen = () => {
   const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
 
   // admin create product
-  const [createProduct, { isLoading: loadingCreate }, refetch] = useCreateProductMutation();
+  const [createProduct, { isLoading: loadingCreate }] = useCreateProductMutation();
 
   const createProductHandler = async () => {
     if (window.confirm('Are you sure you want to create a new product?')) {
@@ -74,7 +87,8 @@ const ProductListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {/* {products.map((product) => (  //replaced 4 pagination */}
+              {data.products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
@@ -99,7 +113,8 @@ const ProductListScreen = () => {
               ))}
             </tbody>
           </Table>
-          {/* PAGINATE PLACEHOLDER */}
+          {/* PAGINATE line */}
+          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
         </>
       )}
     </>
