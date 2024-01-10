@@ -13,6 +13,7 @@ import Message from '../components/Message';
 import { useParams } from 'react-router-dom';
 import Paginate from '../components/Paginate';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 // change the server url for render https://xxx-xxx-xxx.onrender.com
 // for local http://localhost:3001
@@ -47,6 +48,7 @@ const HomeScreen = () => {
 // <Message color of the message red; variant:'danger'
   return (
     <>
+      { keyword && <Link to = '/' className='btn btn-light'> Go Back </Link>}
       {isLoading ? (
         <Loader />
       ) : error ? (
