@@ -54,12 +54,13 @@ const HomeScreen = () => {
     {!keyword ? (
         <>
         <Row>
-          <Col className='my-3 p-3'>
+          {/* <Col className='my-3 p-3 upper-div' sm={12} md={12} lg={12} xl={4}>
             <ProductCarousel />
+          </Col> */}
+          <Col className='my-3 p-3 upper-div' sm={12} md={12} lg={12} xl={8}>
+          <ProductCarousel />
           </Col>
-          <Col className='my-3 p-3'>
-          </Col>
-          <Col className='my-3 p-3 list-box-search'>
+          <Col className='my-3 p-3 list-box-search upper-div' sm={12} md={12} lg={12} xl={4}>
             <h3>Search products by category:</h3>
             <ListBoxSearch />
           </Col>

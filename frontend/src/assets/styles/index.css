@@ -138,16 +138,12 @@ main {
   }
 
   .carousel {
-    width: 480px;
+    /* width: 480px; */
   }
   
   .carousel-image {
-    width:480px;
+    /* width:480px; */
     height:380px;
-  }
-
-  .list-box-search {
-    width:50%;
   }
 }
 
@@ -187,4 +183,8 @@ main {
 
 .card-container .text-container {
   padding: 1rem; /* Add padding as needed */
+}
+
+.upper-div {
+  position: relative;
 }
