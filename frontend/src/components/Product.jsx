@@ -9,9 +9,9 @@ const Products = ({product}) => {
     <>
     
             <Card as='div' className='card h-100 rounded'>
-                <Link to={`/product/${product._id}`}>
+                <Link className='link-no' to={`/product/${product._id}`}>
                     <Card.Img className="card-img-top" as='img' src={product.image} variant='top' alt={product.image}/>
-                </Link>
+                
                 <Card.Body>
                     <Link className='link-no' to={`/product/${product._id}`}>
                         {/* class product-title keeps the title in one line */}
@@ -27,6 +27,7 @@ const Products = ({product}) => {
                     </Card.Text>
                     <Card.Text as='h3'>${product.price}</Card.Text>
                 </Card.Body>
+                </Link>
             </Card>
 
     </>
