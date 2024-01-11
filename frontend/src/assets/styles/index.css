@@ -40,15 +40,6 @@ main {
   .review button {
     margin-top: 10px;
   }
-  
-  .carousel-caption {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-  }
 
   header img {
     width: 15%;
@@ -118,12 +109,14 @@ main {
 }
 
 .carousel-caption {
-  /* position: absolute; */
-  /* width: 100%;
+  position: absolute;
+  width: inherit;
   left: 0;
   right: 0;
-  bottom: 0; */
+  bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+  color: inherit;
 }
 
 
@@ -137,9 +130,9 @@ main {
     object-fit: cover;
   }
 
-  .carousel {
-    /* width: 480px; */
-  }
+  /* .carousel {
+    width: 480px;
+  } */
   
   .carousel-image {
     /* width:480px; */
@@ -187,4 +180,44 @@ main {
 
 .upper-div {
   position: relative;
+}
+
+
+/* for desktop */
+.whatsapp_float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 100;
+}
+
+.whatsapp-icon {
+  margin-top: 16px;
+}
+
+/* for mobile */
+@media screen and (max-width: 767px) {
+  .whatsapp-icon {
+      margin-top: 10px;
+  }
+
+  .whatsapp_float {
+      width: 40px;
+      height: 40px;
+      bottom: 20px;
+      right: 10px;
+      font-size: 22px;
+  }
+}
+
+.carousel-inner {
+  background: whitesmoke;
 }
