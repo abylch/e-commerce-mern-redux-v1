@@ -15,6 +15,7 @@ import Paginate from '../components/Paginate';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import ProductCarousel from '../components/ProductCarousel';
+import ListBoxSearch from '../components/ListBoxSearch';
 
 
 // change the server url for render https://xxx-xxx-xxx.onrender.com
@@ -51,7 +52,19 @@ const HomeScreen = () => {
   return (
     <>
     {!keyword ? (
-        <ProductCarousel />
+        <>
+        <Row>
+          <Col className='my-3 p-3'>
+            <ProductCarousel />
+          </Col>
+          <Col className='my-3 p-3'>
+          </Col>
+          <Col className='my-3 p-3 list-box-search'>
+            <h3>Search products by category:</h3>
+            <ListBoxSearch />
+          </Col>
+        </Row>
+        </>
       ) : ("")}
       { keyword && <Link to = '/' className='btn btn-light mb-4'> Go Back </Link>}
       {isLoading ? (
