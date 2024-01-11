@@ -16,11 +16,9 @@ main {
     padding-left: 0.5rem;
   }
   
-  .product-title {
-    height: 2.5em; /* Set a fixed height */
-    overflow: hidden; /* Hide overflow content */
-    text-overflow: ellipsis; /* Add ellipsis for long text */
-    white-space: nowrap; /* Prevent wrapping */
+  .link-no {
+    color: inherit;
+    text-decoration: none;
   }
   
   table td,
@@ -118,3 +116,33 @@ main {
   background-color: #6c757d;
   border-color: var(--bs-pagination-active-border-color);
 }
+
+.carousel-caption {
+  /* position: absolute; */
+  /* width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0; */
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.carousel {
+  width: 100%;
+}
+
+.carousel-image {
+  width:480px;
+  height:380px;
+}
+
+
+
+@media screen and (min-width: 48em) {
+  .card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+  }
+}
+
+

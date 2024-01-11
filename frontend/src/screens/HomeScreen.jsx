@@ -14,6 +14,8 @@ import { useParams } from 'react-router-dom';
 import Paginate from '../components/Paginate';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import ProductCarousel from '../components/ProductCarousel';
+
 
 // change the server url for render https://xxx-xxx-xxx.onrender.com
 // for local http://localhost:3001
@@ -48,7 +50,10 @@ const HomeScreen = () => {
 // <Message color of the message red; variant:'danger'
   return (
     <>
-      { keyword && <Link to = '/' className='btn btn-light'> Go Back </Link>}
+    {!keyword ? (
+        <ProductCarousel />
+      ) : ("")}
+      { keyword && <Link to = '/' className='btn btn-light mb-4'> Go Back </Link>}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -61,7 +66,7 @@ const HomeScreen = () => {
           <Row>
             {/* {products.map((product) => ( //replaced 4 pagination  */}
             {data.products.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+              <Col className='my-3 p-3' key={product._id} sm={12} md={6} lg={4} xl={3}>
                 <Product product={product}
                  />
               </Col>

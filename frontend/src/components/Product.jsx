@@ -7,18 +7,19 @@ import Rating from './Rating';
 const Products = ({product}) => {
   return (
     <>
-            <Card className='my-3 p-3 rounded'>
+    
+            <Card as='div' className='card h-100 rounded'>
                 <Link to={`/product/${product._id}`}>
-                    <Card.Img as='img' src={product.image} variant='top' alt={product.image}/>
+                    <Card.Img className="card-img-top" as='img' src={product.image} variant='top' alt={product.image}/>
                 </Link>
                 <Card.Body>
-                    <Link to={`/product/${product._id}`}>
+                    <Link className='link-no' to={`/product/${product._id}`}>
                         {/* class product-title keeps the title in one line */}
                         <Card.Title as='div' className='product-title'>
                             <strong>{product.name}</strong>
                         </Card.Title>
                     </Link>
-                    <Card.Text as='div' className='my-3'>
+                    <Card.Text as='div' className='card-text my-3 text-truncate'>
                             {product.description}
                     </Card.Text>
                     <Card.Text as='div'>
@@ -27,6 +28,7 @@ const Products = ({product}) => {
                     <Card.Text as='h3'>${product.price}</Card.Text>
                 </Card.Body>
             </Card>
+
     </>
   )
 }
