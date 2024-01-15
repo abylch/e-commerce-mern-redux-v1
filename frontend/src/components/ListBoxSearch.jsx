@@ -11,10 +11,10 @@ const ListBoxSearch = () => {
             <ListGroup.Item variant="light" action href='/search/headphones'>Headphones</ListGroup.Item>
             <ListGroup.Item variant="light" action href='/search/sony'>Sony</ListGroup.Item>
             <ListGroup.Item variant="light" action href='/search/viking'>Viking</ListGroup.Item>
-            <ListGroup.Item variant="light" action href='/search/skull'>Skull</ListGroup.Item>
-            <ListGroup.Item variant="light" action href='/search/phone'>Phone</ListGroup.Item>
-            <ListGroup.Item variant="light" action href='/search/cannon'>Cannon</ListGroup.Item>
-            <ListGroup.Item variant="light" action href='/search/pantum'>Pantum</ListGroup.Item>
+            <ListGroup.Item variant="light" action href='/search/מדפסת'>מדפסת</ListGroup.Item>
+            <ListGroup.Item variant="light" action href='/search/brother'>Brother</ListGroup.Item>
+            <ListGroup.Item variant="light" action href='/search/mouse'>Mouse</ListGroup.Item>
+            <ListGroup.Item variant="light" action href='/search/לייזר'>לייזר</ListGroup.Item>
         </Card>
     </ListGroup>
     

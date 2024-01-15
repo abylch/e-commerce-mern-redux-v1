@@ -39,6 +39,8 @@ import ProductListScreen from './screens/admin/ProductListScreen';
 import ProductEditScreen from './screens/admin/ProductEditScreen';
 import UserListScreen from './screens/admin/UserListScreen';
 import UserEditScreen from './screens/admin/UserEditScreen';
+// meta
+import { HelmetProvider } from 'react-helmet-async';
 
 // creates routes from elements
 const router = createBrowserRouter(
@@ -78,7 +80,9 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  {/* pasiing the storejs as a global prop the app */}
+  {/* meta wrapper for app*/}
+  <HelmetProvider>
+  {/* passing the storejs as a global prop the app */}
     <Provider store={store}>
       {/* instead of <App /> we can use {router} as a prop --> router={router} /> */}
       {/* paypal provider, we moved the router provider inside yhe paypal provider*/}
@@ -86,6 +90,7 @@ root.render(
         <RouterProvider router={router} />
       </PayPalScriptProvider>
     </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );
 
