@@ -122,8 +122,40 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const getOrders = asyncHandler(async (req, res) => {
   //res.send('get all orders');
-  const orders = await Order.find({}).populate('user', 'id name');
-  res.json(orders);
+  // const orders = await Order.find({}).populate('user', 'id name');
+  // res.json(orders);
+
+  // product paginate update
+  const pageSize = 12;
+  const page = Number(req.query.pageNumber) || 1;
+
+  // const count = await Product.countDocuments();
+  // const products = await Product.find()
+  // search funtionality
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  console.log("keyword from orderController.js ", keyword);
+
+  const count = await Order.countDocuments({ ...keyword }).populate('user', 'id name');
+  const orders = await Order.find({ ...keyword })
+    .populate('user', 'id name')
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  // Calculate the number of pages
+  const totalPages = Math.ceil(count / pageSize);
+
+  console.log("totalPages from orderController.js after order.find({ ...keyword } ", totalPages);
+  console.log("orders lenght from orderController.js after order.find({ ...keyword } ", orders.length);
+  res.json({ orders, page, pages: totalPages });
+  
 });
 
 export {

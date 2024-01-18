@@ -4,9 +4,19 @@ import { FaTimes } from 'react-icons/fa';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { useGetOrdersQuery } from '../../slices/ordersApiSlice';
+// for pagination 
+import { useParams } from 'react-router-dom';
+import Paginate from '../../components/Paginate';
 
 const OrderListScreen = () => {
-  const { data: orders, isLoading, error } = useGetOrdersQuery();
+  //const { data: orders, isLoading, error } = useGetOrdersQuery();
+
+  // replaced 4 pagination
+  const { pageNumber } = useParams();
+
+  const { data, isLoading, error, refetch } = useGetOrdersQuery({
+    pageNumber,
+  });
 
   return (
     <>
@@ -18,6 +28,7 @@ const OrderListScreen = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
+        <>
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
@@ -31,7 +42,7 @@ const OrderListScreen = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {data.orders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
@@ -62,6 +73,9 @@ const OrderListScreen = () => {
             ))}
           </tbody>
         </Table>
+        {/* PAGINATE line */}
+        <Paginate pages={data.pages} page={data.page} isAdmin={true} listType="order"/>
+        </>
       )}
     </>
   );

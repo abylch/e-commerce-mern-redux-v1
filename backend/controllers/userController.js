@@ -135,8 +135,38 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
   //res.send('get users');
-  const users = await User.find({});
-  res.json(users);
+  // const users = await User.find({});
+  // res.json(users);
+
+  // product paginate update
+  const pageSize = 12;
+  const page = Number(req.query.pageNumber) || 1;
+
+  // const count = await Product.countDocuments();
+  // const products = await Product.find()
+  // search funtionality
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  console.log("keyword from usersController.js ", keyword);
+
+
+  const count = await User.countDocuments({ ...keyword });
+  const users = await User.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+    console.log("users lenght from userController.js after users.find({ ...keyword } ", users.lenght);
+  res.json({ users, page, pages: Math.ceil(count / pageSize) });
+
+  
+
 });
 
 // @desc    Delete user

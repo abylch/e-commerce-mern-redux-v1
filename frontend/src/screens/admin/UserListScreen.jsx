@@ -6,9 +6,19 @@ import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { useGetUsersQuery, useDeleteUserMutation, } from '../../slices/usersApiSlice';
 import { toast } from 'react-toastify';
+// for pagination 
+import { useParams } from 'react-router-dom';
+import Paginate from '../../components/Paginate';
 
 const UserListScreen = () => {
-  const { data: users, refetch, isLoading, error } = useGetUsersQuery();
+
+  //const { data: users, refetch, isLoading, error } = useGetUsersQuery();
+  // replaced 4 pagination
+  const { pageNumber } = useParams();
+  const { data, isLoading, error, refetch } = useGetUsersQuery({
+    pageNumber,
+  });
+  
   const [deleteUser] = useDeleteUserMutation();
 
   const cannotDeleteHandler = () => {
@@ -38,6 +48,7 @@ const UserListScreen = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
+        <>
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
@@ -49,7 +60,7 @@ const UserListScreen = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {data.users.map((user) => (
               <tr key={user._id}>
                 <td>{user._id}</td>
                 <td>{user.name}</td>
@@ -99,6 +110,9 @@ const UserListScreen = () => {
             ))}
           </tbody>
         </Table>
+        {/* PAGINATE line */}
+        <Paginate pages={data.pages} page={data.page} isAdmin={true} listType="user"/>
+        </>
       )}
     </>
   );
