@@ -17,6 +17,7 @@ import cookieParser from 'cookie-parser';
 // upload pic
 import path from 'path';
 import uploadRoutes from './routes/uploadRoutes.js';
+import emailRoutes from './routes/emailRoutes.js'; // Import the emailRoutes
 
 
 
@@ -44,6 +45,7 @@ app.use(cookieParser());
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/emails', emailRoutes);
 
 // upload pic
 app.use('/api/upload', uploadRoutes);

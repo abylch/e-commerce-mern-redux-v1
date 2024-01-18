@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+// screens/PlaceOrderScreen.jsx
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
@@ -7,14 +8,29 @@ import Message from '../components/Message';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Loader from '../components/Loader';
 import { useCreateOrderMutation } from '../slices/ordersApiSlice';
+// eslint-disable-next-line
 import { clearCartItems } from '../slices/cartSlice';
+import { EmailOrderInfo, EmailOrderStatus } from '../components/EmailOrderInfo';
+
 
 const PlaceOrderScreen = () => {
+  
+
   const navigate = useNavigate();
+  // eslint-disable-next-line
+  const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
+  // user info
+  const userInfo = useSelector((state) => state.auth);
+
 
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
+
+  // eslint-disable-next-line
+  const [emailSent, setEmailSent] = useState(false);
+  const [orderState, setOrderState] = useState(null);
+  
 
   useEffect(() => {
     if (!cart.shippingAddress.address) {
@@ -24,7 +40,7 @@ const PlaceOrderScreen = () => {
     }
   }, [cart.paymentMethod, cart.shippingAddress.address, navigate]);
 
-  const dispatch = useDispatch();
+
   const placeOrderHandler = async () => {
     try {
       const res = await createOrder({
@@ -36,12 +52,19 @@ const PlaceOrderScreen = () => {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       }).unwrap();
+
+      setOrderState(res);
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
+      toast.success('Order placed successfully');
+
     } catch (err) {
       toast.error(err);
     }
   };
+
+  
+
 
   return (
     <>
@@ -49,6 +72,11 @@ const PlaceOrderScreen = () => {
       <Row>
         <Col md={8}>
           <ListGroup variant='flush'>
+          {/* EmailOrderStatus component */}
+          <ListGroup.Item>
+            <EmailOrderStatus orderState={orderState} userInfo={userInfo} setEmailSent={setEmailSent} />
+          </ListGroup.Item>
+          
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
@@ -141,6 +169,10 @@ const PlaceOrderScreen = () => {
                   Place Order
                 </Button>
                 {isLoading && <Loader />}
+              </ListGroup.Item>
+              {/* Add the EmailOrderInfo component here */}
+              <ListGroup.Item>
+                <EmailOrderInfo cartState={cart} userInfo={userInfo} />
               </ListGroup.Item>
             </ListGroup>
           </Card>

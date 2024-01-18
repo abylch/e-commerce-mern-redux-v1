@@ -17,13 +17,13 @@ const addOrderItems = asyncHandler(async (req, res) => {
     totalPrice,
   } = req.body;
 
-  console.log("req.body from orderController addOrderItem: ", req.body)
+  //console.log("req.body from orderController addOrderItem: ", req.body)
 
   if (orderItems && orderItems.length === 0) {
     res.status(400);
     throw new Error('No order items');
   } else {
-    console.log("req.user from orderController addOrderItem: ", req)
+    //console.log("req.user from orderController addOrderItem: ", req)
     const order = new Order({
       user: req.user._id,
       orderItems: orderItems?.map((x) => ({
@@ -40,6 +40,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     });
 
     const createdOrder = await order.save();
+    console.log("createdOrder from orderController addOrderItem: ", createdOrder)
 
     res.status(201).json(createdOrder);
   }
