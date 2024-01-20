@@ -11,7 +11,7 @@ const Paginate = ({ pages, page, listType, isAdmin = false, keyword = '' }) => {
             to={
               !isAdmin
                 ? keyword
-                  ? `/search/${keyword}/${listType}/page/${x + 1}`
+                  ? `/search/${keyword}/page/${x + 1}`
                   : `/${listType}/page/${x + 1}`
                 : `/admin/${listType}list/${x + 1}`
             }
