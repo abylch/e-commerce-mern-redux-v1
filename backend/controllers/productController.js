@@ -16,11 +16,11 @@ const getProducts = asyncHandler(async (req, res) => {
   // search funtionality
   const keyword = req.query.keyword
     ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
+      $or: [
+        { name: { $regex: req.query.keyword, $options: 'i' } },
+        { description: { $regex: req.query.keyword, $options: 'i' } },
+      ],
+    }
     : {};
 
   console.log("keyword from productController.js ", keyword);
