@@ -221,3 +221,8 @@ main {
 .carousel-inner {
   background: whitesmoke;
 }
+
+.test-pay-button {
+  margin-bottom: 10px;
+  width: -webkit-fill-available;
+}

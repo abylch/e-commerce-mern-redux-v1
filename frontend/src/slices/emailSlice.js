@@ -21,9 +21,9 @@ export const emailSlice  = apiSlice.injectEndpoints({
           credentials: 'include',
         }),
       }),
-      sendOrderPaidEmail: builder.mutation({
+      sendPaidInvoiceEmail: builder.mutation({
         query: ({ orderState, userInfo }) => ({
-          url: 'http://localhost:3001/api/emails/email-order-paid',
+          url: 'http://localhost:3001/api/emails/email-paid-invoice',
           method: 'POST',
           body: { orderState, userInfo },
           credentials: 'include',
@@ -42,5 +42,5 @@ export const emailSlice  = apiSlice.injectEndpoints({
 
 export const {
   useSendOrderInfoEmailMutation, useSendOrderConfirmationEmailMutation,
-  useSendOrderPaidEmailMutation, useSendWelcomeEmailMutation,
+  useSendPaidInvoiceEmailMutation, useSendWelcomeEmailMutation,
 } = emailSlice;

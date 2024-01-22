@@ -1,6 +1,7 @@
+// eslint-disable-next-line
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col, ListGroup } from 'react-bootstrap';
+import { Form, Button, Row, Col, } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
@@ -9,7 +10,7 @@ import { useRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
 
-import { SendWelcomeEmail } from '../components/EmailOrderInfo';
+import { useSendWelcomeEmail } from '../utils/emailUtils';
 
 const RegisterScreen = () => {
   const [name, setName] = useState('');
@@ -22,21 +23,15 @@ const RegisterScreen = () => {
 
   const [register, { isLoading }] = useRegisterMutation();
 
+  // eslint-disable-next-line
   const { userInfo } = useSelector((state) => state.auth);
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const redirect = sp.get('redirect') || '/';
 
-  // eslint-disable-next-line
-  const [emailSent, setEmailSent] = useState(false);
+  const { sendWelcomeEmail } = useSendWelcomeEmail();
   
-
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect);
-    }
-  }, [navigate, redirect, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -47,10 +42,12 @@ const RegisterScreen = () => {
       try {
         const res = await register({ name, email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
-  
-        setEmailSent(true); // Set emailSent to true after successful registration
+
+        res && (await sendWelcomeEmail({ userInfo:res }));
 
         toast.success('Registered successfully');
+
+        navigate(redirect);
         
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -116,11 +113,6 @@ const RegisterScreen = () => {
             Login
           </Link>
         </Col>
-        {/* Conditionally render SendWelcomeEmail based on emailSent */}
-        
-          <ListGroup.Item>
-            <SendWelcomeEmail userInfo={userInfo} setEmailSent={setEmailSent} redirect={redirect} />
-          </ListGroup.Item>
       </Row>
     </FormContainer>
   );

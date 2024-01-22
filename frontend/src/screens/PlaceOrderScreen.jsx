@@ -1,4 +1,5 @@
 // screens/PlaceOrderScreen.jsx
+// eslint-disable-next-line
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,16 +9,16 @@ import Message from '../components/Message';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Loader from '../components/Loader';
 import { useCreateOrderMutation } from '../slices/ordersApiSlice';
-// eslint-disable-next-line
 import { clearCartItems } from '../slices/cartSlice';
-import { EmailOrderInfo, EmailOrderStatus } from '../components/EmailOrderInfo';
+// eslint-disable-next-line
+import { EmailOrderInfo,  } from '../components/EmailOrderInfo';
+import {useSendOrderConfirmationEmail} from '../utils/emailUtils'
 
 
 const PlaceOrderScreen = () => {
   
 
   const navigate = useNavigate();
-  // eslint-disable-next-line
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
@@ -27,9 +28,23 @@ const PlaceOrderScreen = () => {
 
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
+  const { sendOrderConfirmationEmail } = useSendOrderConfirmationEmail();
+
   // eslint-disable-next-line
-  const [emailSent, setEmailSent] = useState(false);
   const [orderState, setOrderState] = useState(null);
+  // useEffect(() => {
+  //   if (orderState && userInfo){
+  //     try {
+  //       sendOrderConfirmationEmail({ orderState, userInfo });
+  //       dispatch(clearCartItems());
+  //       navigate(`/order/${res._id}`);
+  //     } catch (error) {
+  //       console.error('Error sending order confirmation email:', error);
+  //       // Handle the error, show a user-friendly message, etc.
+  //     }
+  //   }
+  //   // eslint-disable-next-line
+  // }, [orderState, userInfo]);
   
 
   useEffect(() => {
@@ -52,11 +67,12 @@ const PlaceOrderScreen = () => {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       }).unwrap();
+      
 
-      setOrderState(res);
+      await sendOrderConfirmationEmail({ orderState: res, userInfo });
+      toast.success('Order placed successfully');
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
-      toast.success('Order placed successfully');
 
     } catch (err) {
       toast.error(err);
@@ -72,11 +88,6 @@ const PlaceOrderScreen = () => {
       <Row>
         <Col md={8}>
           <ListGroup variant='flush'>
-          {/* EmailOrderStatus component */}
-          <ListGroup.Item>
-            <EmailOrderStatus orderState={orderState} userInfo={userInfo} setEmailSent={setEmailSent} />
-          </ListGroup.Item>
-          
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>

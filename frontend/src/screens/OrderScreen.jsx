@@ -8,6 +8,8 @@ import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPaypalClientIdQuery, useDeliverOrderMutation } from '../slices/ordersApiSlice';
+// Import the utility function for sending a paid invoice email
+import { useSendPaidInvoiceEmail } from '../utils/emailUtils';
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -21,6 +23,9 @@ const OrderScreen = () => {
     isLoading,
     error,
   } = useGetOrderDetailsQuery(orderId);
+
+  // Import the utility function for sending a paid invoice email
+  const { sendPaidInvoiceEmail } = useSendPaidInvoiceEmail();
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
@@ -61,6 +66,7 @@ const OrderScreen = () => {
     return actions.order.capture().then(async function (details) {
       try {
         await payOrder({ orderId, details });
+        await sendPaidInvoiceEmail({ orderState: order, userInfo });
         refetch();
         toast.success('Order is paid');
       } catch (err) {
@@ -71,6 +77,7 @@ const OrderScreen = () => {
 
   async function onApproveTest() {
     await payOrder({ orderId, details: { payer: {} } });
+    await sendPaidInvoiceEmail({ orderState: order, userInfo });
     refetch();
 
     toast.success('Order is paid');
@@ -219,8 +226,8 @@ const OrderScreen = () => {
                   ) : (
                     <div>
                       <Button
-                        style={{ marginBottom: '10px' }}
                         onClick={onApproveTest}
+                        className='test-pay-button'
                       >
                         Test Pay Order
                       </Button>
