@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
@@ -8,6 +8,8 @@ import FormContainer from '../components/FormContainer';
 import { useRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
+
+import { SendWelcomeEmail } from '../components/EmailOrderInfo';
 
 const RegisterScreen = () => {
   const [name, setName] = useState('');
@@ -26,6 +28,10 @@ const RegisterScreen = () => {
   const sp = new URLSearchParams(search);
   const redirect = sp.get('redirect') || '/';
 
+  // eslint-disable-next-line
+  const [emailSent, setEmailSent] = useState(false);
+  
+
   useEffect(() => {
     if (userInfo) {
       navigate(redirect);
@@ -41,7 +47,11 @@ const RegisterScreen = () => {
       try {
         const res = await register({ name, email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
-        navigate(redirect);
+  
+        setEmailSent(true); // Set emailSent to true after successful registration
+
+        toast.success('Registered successfully');
+        
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -49,6 +59,7 @@ const RegisterScreen = () => {
   };
 
   return (
+    
     <FormContainer>
       <h1>Register</h1>
       <Form onSubmit={submitHandler}>
@@ -105,6 +116,11 @@ const RegisterScreen = () => {
             Login
           </Link>
         </Col>
+        {/* Conditionally render SendWelcomeEmail based on emailSent */}
+        
+          <ListGroup.Item>
+            <SendWelcomeEmail userInfo={userInfo} setEmailSent={setEmailSent} redirect={redirect} />
+          </ListGroup.Item>
       </Row>
     </FormContainer>
   );

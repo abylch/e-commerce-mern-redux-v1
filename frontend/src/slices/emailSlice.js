@@ -29,7 +29,18 @@ export const emailSlice  = apiSlice.injectEndpoints({
           credentials: 'include',
         }),
       }),
+      sendWelcomeEmail: builder.mutation({
+        query: (userInfo) => ({
+          url: 'http://localhost:3001/api/emails/email-welcome',
+          method: 'POST',
+          body: userInfo,
+          credentials: 'include',
+        }),
+      }),
     }),
 });
 
-export const { useSendOrderInfoEmailMutation, useSendOrderConfirmationEmailMutation, useSendOrderPaidEmailMutation } = emailSlice;
+export const {
+  useSendOrderInfoEmailMutation, useSendOrderConfirmationEmailMutation,
+  useSendOrderPaidEmailMutation, useSendWelcomeEmailMutation,
+} = emailSlice;

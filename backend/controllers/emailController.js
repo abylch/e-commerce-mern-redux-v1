@@ -187,7 +187,53 @@ const sendOrderConfirmationEmail = asyncHandler(async (req, res) => {
   }
   );
 
+// Define the function to send a welcome email
+const sendWelcomeEmail = asyncHandler(async (req, res) => {
+  try {
+
+    const userName = req.user.name;
+    const userEmail = req.user.email;
+    const user = { name: userName, email: userEmail };
+    console.log('user from sendWelcomeEmail emailController.js:', user);
+
+
+      // Build the welcome email content
+      const emailContent = buildWelcomeEmailContent(user);
+
+      // Send the email with the defined transport object
+      const info = await transporter.sendMail(emailContent);
+
+      console.log('Welcome email sent successfully.');
+      res.status(200).json({ success: true, messageId: info.messageId });
+      // You might return info or any other relevant data if needed
+
+      // Placeholder function for building the welcome email content
+      function buildWelcomeEmailContent(user) {
+        return {
+            from: '"Your e-Shop-Shop" <exintraders@bylch.com>',
+            to: user.email,
+            subject: 'Welcome to Your e-Shop-Shop!',
+            text: `Hello ${user.name}, welcome to Your e-Shop-Shop! We're excited to have you on board.`,
+            html: `
+                <p>Hello ${user.name}, this is a test</p>
+                <p>Dear ${user.name},</p>
+                <p>Thank you for your registration!</p>
+                <p>Welcome to Your e-Shop-Shop! We're thrilled to have you as a new member.</p>
+                <p>Thank you for joining us!</p>
+                <p>Best regards,</p>
+                <p>Your e-Shop-Shop Team</p>
+            `,
+        };
+      }
+
+  } catch (error) {
+      console.error('Error sending welcome email:', error.message);
+      // Handle the error as needed
+  }
+});
+
 export {
   sendOrderInfoEmail,
   sendOrderConfirmationEmail,
+  sendWelcomeEmail,
 };

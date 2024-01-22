@@ -14,6 +14,7 @@ const OrderListScreen = () => {
   // replaced 4 pagination
   const { pageNumber } = useParams();
 
+  // eslint-disable-next-line
   const { data, isLoading, error, refetch } = useGetOrdersQuery({
     pageNumber,
   });

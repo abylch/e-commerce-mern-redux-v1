@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { 
     useSendOrderInfoEmailMutation,
     useSendOrderConfirmationEmailMutation,
+    useSendWelcomeEmailMutation,
   } from '../slices/emailSlice'; // Adjust the path accordingly
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -102,3 +103,123 @@ export const EmailOrderStatus = ({ orderState, userInfo }) => {
         </>
 )
 };
+
+export const SendWelcomeEmail = ({ userInfo, redirect}) => {
+  const [sendRegistrationEmail, { isLoading, error }] = useSendWelcomeEmailMutation();
+  const [emailSent, setEmailSent] = useState(true);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const handleSendEmail = async () => {
+      try {
+        console.log("hi from sendRegistrationEmail in the SendWelcomeEmail component, userInfo", userInfo);
+        const response = await sendRegistrationEmail(userInfo);
+        setEmailSent(true);
+
+        if (response.data.success === true) {
+          toast.success('Welcome Email Sent Successfully!');
+          setEmailSent(true); // Set emailSent to true after sending the email
+          navigate(redirect)
+        } else {
+          toast.error(`Failed to send Welcome email: ${response.error.data.message}`);
+        }
+      } catch (err) {
+        console.error('Error sending welcome email:', err);
+      } finally {
+        setEmailSent(true); // Reset emailSent to true regardless of success or failure
+      }
+    };
+
+    if (userInfo && emailSent) {
+      handleSendEmail();
+  }
+  // eslint-disable-next-line
+}, [ emailSent, setEmailSent, userInfo, isLoading, error, sendRegistrationEmail]);
+
+    
+
+  return (
+    <>
+      {isLoading && <Loader />}
+      {error && <Message variant='danger'>{error.data.message}</Message>}
+    </>
+  );
+};
+
+// export const SendWelcomeEmail = ({user, setEmailSent}) => {
+
+//   const [sendRegistrationEmail, { isLoading, error }] = useSendWelcomeEmailMutation();
+//   console.log("userInfo from SendWelcomeEmail", user);
+
+
+//   const handleSendEmail = async () => {
+//     try {
+//       console.log("hi from sendRegistrationEmail in the SendWelcomeEmail component, userInfo", user);
+//       const response = await sendRegistrationEmail(user);
+//       console.log("response from welcome email",response);
+//       if (response.data.success === true) {
+//         toast.success('Welcome Email Send Successfull!');
+//       }
+//       else {
+//         toast.error(`Failed to send Welcome email ${response.error.data.message}`);
+//         console.log("response from welcome email failed",response);
+//       }
+//       console.log(response);
+//     } catch (err) {
+//       console.error(err);
+//     }
+  
+//   }
+
+//   useEffect(() => {
+//     handleSendEmail();
+//     setEmailSent(true); // Reset emailSent to true regardless of success or failure
+//   }
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+//   , [user, isLoading, sendRegistrationEmail, setEmailSent]);
+
+//   return ( 
+//     <>
+//         {isLoading && <Loader />}
+//         {error && <Message variant='danger'>{error.data.message}</Message>}
+//     </>
+// )
+// };
+
+// export const SendWelcomeEmail = ({ userInfo, setEmailSent }) => {
+//   const [emailSent, setEmailSent] = useState(false);
+//   const [sendRegistrationEmail, { isLoading, error }] = useSendWelcomeEmailMutation();
+
+//   useEffect(() => {
+//     const handleSendEmail = async () => {
+//       try {
+//         console.log("hi from sendRegistrationEmail in the SendWelcomeEmail component, userInfo", userInfo);
+
+//         // Check if the email has already been sent
+//         if (!emailSent) {
+//           const response = await sendRegistrationEmail(userInfo);
+
+//           if (response.data.success === true) {
+//             toast.success('Welcome Email Sent Successfully!');
+//             setEmailSent(true); // Set the flag to true after sending the email
+//           } else {
+//             toast.error(`Failed to send Welcome email: ${response.error.data.message}`);
+//           }
+//         }
+//       } catch (err) {
+//         console.error('Error sending welcome email:', err);
+//       }
+//     };
+
+
+//     handleSendEmail();
+//     setEmailSent(true); // Reset emailSent to true regardless of success or failure
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [userInfo, isLoading, error, sendRegistrationEmail]);
+
+//   return (
+//     <>
+//       {isLoading && <Loader />}
+//       {error && <Message variant='danger'>{error.data.message}</Message>}
+//     </>
+//   );
+// };
