@@ -70,7 +70,7 @@ const OrderScreen = () => {
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
-        await payOrder({ orderId, details });
+        await payOrder({ orderId, details }).unwrap();
         await sendPaidInvoiceEmail({ orderState: order, userInfo });
         // Update product in stock
         await updateProductCountInStock({ order: order, userInfo: userInfo });
@@ -82,10 +82,11 @@ const OrderScreen = () => {
     });
   }
 
+  // for testing only, erase if in production
   async function onApproveTest() {
-    await payOrder({ orderId, details: { payer: {} } });
+    await payOrder({ orderId, details: { payer: "test" } }).unwrap();
     await sendPaidInvoiceEmail({ orderState: order, userInfo });
-    // Update product in stock
+    // // Update product in stock
     await updateProductCountInStock({ order: order, userInfo: userInfo });
     refetch();
     toast.success('Order is paid');

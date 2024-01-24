@@ -1,7 +1,6 @@
 // inStockUtils.js
 
 import { useUpdateProductCountInStockMutation } from '../slices/productsApiSlice';
-import { toast } from 'react-toastify';
 
 export const useUpdateProductCountInStock = () => {
   const [ updateProductCountInStockMutation ] = useUpdateProductCountInStockMutation();
