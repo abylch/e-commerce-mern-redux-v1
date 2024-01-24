@@ -63,9 +63,19 @@ export const productSlice = apiSlice.injectEndpoints({
       query: () => `${PRODUCTS_URL}/top`,
       keepUnusedDataFor: 5,
     }),
+    // update product countInStock
+    updateProductCountInStock: builder.mutation({
+      query: ({data, userInfo}) => ({
+        url: `${PRODUCTS_URL}/${data.productId}/updateinstock`,
+        //url: `http://localhost:3001/api/products/${data.productId}/updateinstock`,
+        method: 'PUT',
+        body: {data, userInfo},
+      }),
+      invalidatesTags: ['Product'], // for cache invalidation
+    }),
   }),
 });
 
 export const { useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation, 
   useUpdateProductMutation, useUploadProductImageMutation, useDeleteProductMutation,
-  useCreateReviewMutation, useGetTopProductsQuery } = productSlice;
+  useCreateReviewMutation, useGetTopProductsQuery, useUpdateProductCountInStockMutation, } = productSlice;

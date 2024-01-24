@@ -10,6 +10,9 @@ import { toast } from 'react-toastify';
 import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPaypalClientIdQuery, useDeliverOrderMutation } from '../slices/ordersApiSlice';
 // Import the utility function for sending a paid invoice email
 import { useSendPaidInvoiceEmail } from '../utils/emailUtils';
+// Import the utility function for updating countInStock
+import { useUpdateProductCountInStock } from '../utils/inStockUtils';
+
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -35,6 +38,8 @@ const OrderScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+  const { updateProductCountInStock } = useUpdateProductCountInStock();
 
   const {
     data: paypal,
@@ -67,6 +72,8 @@ const OrderScreen = () => {
       try {
         await payOrder({ orderId, details });
         await sendPaidInvoiceEmail({ orderState: order, userInfo });
+        // Update product in stock
+        await updateProductCountInStock({ order: order, userInfo: userInfo });
         refetch();
         toast.success('Order is paid');
       } catch (err) {
@@ -78,8 +85,9 @@ const OrderScreen = () => {
   async function onApproveTest() {
     await payOrder({ orderId, details: { payer: {} } });
     await sendPaidInvoiceEmail({ orderState: order, userInfo });
+    // Update product in stock
+    await updateProductCountInStock({ order: order, userInfo: userInfo });
     refetch();
-
     toast.success('Order is paid');
   }
 

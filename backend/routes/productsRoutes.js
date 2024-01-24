@@ -9,6 +9,7 @@ import {
     deleteProduct,
     createProductReview,
     getTopProducts,
+    updateStockOnOrderPayment
   } from '../controllers/productController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
@@ -27,6 +28,8 @@ router
   .delete(protect, admin, deleteProduct);
 
 router.route('/:id/reviews').post(protect, createProductReview);
+
+router.route('/:id/updateinstock').put(protect, updateStockOnOrderPayment);
 
 
 

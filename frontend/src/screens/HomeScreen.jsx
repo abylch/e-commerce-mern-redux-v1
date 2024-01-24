@@ -64,7 +64,7 @@ const HomeScreen = () => {
           <ProductCarousel />
           </Col>
           <Col className='my-3 p-3 list-box-search upper-div' sm={12} md={12} lg={12} xl={4}>
-            <h3>Search products by category:</h3>
+            <h3>Search products by keyword:</h3>
             <ListBoxSearch />
           </Col>
         </Row>

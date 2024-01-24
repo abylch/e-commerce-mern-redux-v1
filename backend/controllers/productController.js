@@ -1,5 +1,6 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import Product from '../models/productModel.js';
+import Order from '../models/orderModel.js';
 
 // @desc    Fetch all products
 // @route   GET /api/products
@@ -161,6 +162,37 @@ const getTopProducts = asyncHandler(async (req, res) => {
   res.json(products);
 });
 
+// @desc    update product countInStock
+// @route   PUT /api/products/:id/updateinstock
+// @access  Public
+const updateStockOnOrderPayment = asyncHandler(async (req, res) => {
+
+  console.log("hi from productController.js ");
+  //console.log("req from productController.js ", req);
+  console.log("req.data from productController.js ", req.body.data);
+  
+  const product = await Product.findById(req.body.data.productId);
+
+  if (!product) {
+    res.status(404);
+    throw new Error('product not found');
+  }
+
+
+  // Check if product is available
+  if (product) {
+    // Update countInStock based on the quantity in the order to remove -
+    product.countInStock -= req.body.data.qty;
+
+    // Save the updated product
+    await product.save();
+    res.status(201).json({ message: 'Stock Updated' });
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
+});
+
 export {
   getProducts,
   getProductById,
@@ -168,5 +200,6 @@ export {
   updateProduct,
   deleteProduct,
   createProductReview,
-  getTopProducts
+  getTopProducts,
+  updateStockOnOrderPayment
 };
