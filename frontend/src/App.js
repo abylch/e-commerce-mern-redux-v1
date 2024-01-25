@@ -23,7 +23,7 @@ const App = () => {
       const parsedExpirationTime = parseInt(expirationTime, 10);
       if (currentTime > parsedExpirationTime) {
         dispatch(logout());
-        navigate('/login');
+        navigate('/');
       }
     }
   }, [dispatch, navigate]);
