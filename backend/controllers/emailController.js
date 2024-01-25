@@ -50,44 +50,55 @@ function buildEmailContent(cartState, user) {
       from: '"Your e-Shop-Shop" <exintraders@bylch.com>',
       to: user.email,
       cc: 'exintraders@bylch.com',
-      subject: 'Inquire Information Product/s, Payment...',
-      text: `Thank you, ${user.name}, for your Inquire! Here are the details: ${JSON.stringify(cartState)}`,
+      subject: 'Inquiry Information - Product/s, Payment...',
+      text: `Thank you, ${user.name}, for your inquiry! Here are the details: ${JSON.stringify(cartState)}`,
       html: `
-      <p> this is a test, is not a real order inquire </p>
-      <p>Thank you, ${user.name}, for your Inquire Information Product/s, Payment...!</p>
-      <p>We'll get back to you, ASAP!</p>
-      <p>Here are the details:</p>
-      <p>Order ID: ${cartState.orderId}</p>
-      <p>Products:</p>
-      <table border="1">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${cartState.cartItems.map((item, index) => (
-        `<tr key=${index}>
-          <td>${item.name}</td>
-          <td>${item.qty}</td>
-          <td>${item.price}</td>
-          <td>${item.qty * item.price}</td>
-        </tr>`
-      )).join('')}
-    </tbody>
-  </table>
-      <p>Items Price: ${cartState.itemsPrice}</p>
-      <p>Shipping Address:</p>
-      <p>Address: ${cartState.shippingAddress.address}</p>
-      <p>City: ${cartState.shippingAddress.city}</p>
-      <p>Postal Code: ${cartState.shippingAddress.postalCode}</p>
-      <p>Country: ${cartState.shippingAddress.country}</p>
-      <p>Payment Method: ${cartState.paymentMethod}</p>
-      <p>Order Status: ${cartState.orderStatus}</p>
-      <p>Order Date: ${cartState.orderDate}</p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+          <p style="color: #333; text-align: center;">This is a test. It is not a real inquiry.</p>
+          <p style="text-align: center;">Thank you, ${user.name}, for your inquiry about product information, payment, and more!</p>
+          <p style="text-align: center;">We'll get back to you as soon as possible!</p>
+          <hr style="border: 1px solid #ddd;">
+
+          <h3>Inquiry Details</h3>
+          <p><strong>Order ID:</strong> ${cartState.orderId}</p>
+
+          <h3>Products</h3>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+              <tr style="background-color: #f2f2f2;">
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Product</th>
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Quantity</th>
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Price</th>
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${cartState.cartItems.map((item, index) => (
+                `<tr key=${index}>
+                  <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">${item.qty}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">$${item.price.toFixed(2)}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">$${(item.qty * item.price).toFixed(2)}</td>
+                </tr>`
+              )).join('')}
+            </tbody>
+          </table>
+
+          <h3>Total Summary</h3>
+          <p><strong>Items Price:</strong> $${cartState.itemsPrice.toFixed(2)}</p>
+
+          <h3>Shipping Address</h3>
+          <p><strong>Address:</strong> ${cartState.shippingAddress.address}</p>
+          <p><strong>City:</strong> ${cartState.shippingAddress.city}</p>
+          <p><strong>Postal Code:</strong> ${cartState.shippingAddress.postalCode}</p>
+          <p><strong>Country:</strong> ${cartState.shippingAddress.country}</p>
+
+          <p><strong>Payment Method:</strong> ${cartState.paymentMethod}</p>
+          <p><strong>Order Status:</strong> ${cartState.orderStatus}</p>
+          <p><strong>Order Date:</strong> ${cartState.orderDate}</p>
+
+          <p style="text-align: center; margin-top: 20px; color: #888;">We appreciate your interest in our products!</p>
+        </div>
       `,
     };
   }
@@ -135,47 +146,63 @@ function buildEmailContent(orderState, user) {
     return {
       from: '"Your e-Shop-Shop" <exintraders@bylch.com>',
       to: user.email,
-      // cc: 'exintraders@bylch.com',
-      subject: `Order ${orderState._id} confirmation Status`,
-      text: `Thank you, ${user.name}, for making an Order! Here are the details: ${JSON.stringify(orderState)}`,
+      cc: 'exintraders@bylch.com',
+      subject: `Order ${orderState._id} Confirmation Status`,
+      text: `Thank you, ${user.name}, for making an order! Here are the details: ${JSON.stringify(orderState)}`,
       html: `
-      <p> this is a test, is not a real order confirmation </p>
-      <p>Thank you, ${user.name}, for making an Order!</p>
-      <p>Here are the details:</p>
-      <p>Order ID: ${orderState._id}</p>
-      <p>Order Status is Paid: ${orderState.isPaid}</p>
-      <p>Products:</p>
-      <table border="1">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${orderState.orderItems.map((item, index) => (
-        `<tr key=${index}>
-          <td>${item.name}</td>
-          <td>${item.qty}</td>
-          <td>${item.price}</td>
-          <td>${item.qty * item.price}</td>
-        </tr>`
-      )).join('')}
-    </tbody>
-  </table>
-      <p>Total Items Price: ${orderState.itemsPrice}</p>
-      <p>Total Shipping Price: ${orderState.shippingPrice}</p>
-      <p>Total Order Price: ${orderState.totalPrice}</p>
-      <p>Payment Method: ${orderState.paymentMethod}</p>
-      <p>Order Status is Paid: ${orderState.isPaid}</p>
-      <p>Order Date: ${orderState.updatedAt}</p>
-      <p>Shipping Address:</p>
-      <p>Address: ${orderState.shippingAddress.address}</p>
-      <p>City: ${orderState.shippingAddress.city}</p>
-      <p>Postal Code: ${orderState.shippingAddress.postalCode}</p>
-      <p>Country: ${orderState.shippingAddress.country}</p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+          <p style="color: #333; text-align: center;">This is a test. It is not a real order confirmation.</p>
+          <p style="text-align: center;">Thank you, ${user.name}, for making an order!</p>
+          <hr style="border: 1px solid #ddd;">
+
+          <h3>Order Details</h3>
+          <p><strong>Order ID:</strong> ${orderState._id}</p>
+          <p><strong>Order Status:</strong> ${orderState.isPaid ? 'Paid' : 'Pending Payment'}</p>
+
+          <h3>Products</h3>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+              <tr style="background-color: #f2f2f2;">
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Product</th>
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Quantity</th>
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Price</th>
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${orderState.orderItems.map((item, index) => (
+                `<tr key=${index}>
+                  <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">${item.qty}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">$${item.price.toFixed(2)}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">$${(item.qty * item.price).toFixed(2)}</td>
+                </tr>`
+              )).join('')}
+            </tbody>
+          </table>
+
+          <h3>Total Summary</h3>
+          <p><strong>Items Price:</strong> $${orderState.itemsPrice.toFixed(2)}</p>
+          <p><strong>Shipping Price:</strong> $${orderState.shippingPrice.toFixed(2)}</p>
+          <p><strong>Total Order Price:</strong> $${orderState.totalPrice.toFixed(2)}</p>
+
+          <h3>Payment Details</h3>
+          <p><strong>Payment Method:</strong> ${orderState.paymentMethod}</p>
+
+          <h3>Order Date</h3>
+          <p>${new Date(orderState.updatedAt).toLocaleString()}</p>
+
+          <h3>Shipping Address</h3>
+          <p><strong>Name:</strong> ${user.name}</p>
+          <p><strong>Address:</strong> ${orderState.shippingAddress.address}</p>
+          <p><strong>City:</strong> ${orderState.shippingAddress.city}</p>
+          <p><strong>Postal Code:</strong> ${orderState.shippingAddress.postalCode}</p>
+          <p><strong>Country:</strong> ${orderState.shippingAddress.country}</p>
+
+          ${!orderState.isPaid ? '<p style="color: red; font-weight: bold; margin-top: 20px;">Please note: Your order is not paid. Process the payment as soon as possible to ensure timely processing.</p>' : ''}
+
+          <p style="text-align: center; margin-top: 20px; color: #888;">We appreciate your business!</p>
+        </div>
       `,
     };
   }
@@ -254,47 +281,61 @@ const sendPaidInvoiceEmail = asyncHandler(async (req, res) => {
       return {
         from: '"Your e-Shop-Shop" <exintraders@bylch.com>',
         to: userInfo.email,
+        cc: 'exintraders@bylch.com',
         subject: `Paid Invoice for Order ${orderState._id}`,
         text: `Thank you for your payment. Here is your paid invoice: ${JSON.stringify(orderState)}`,
         html: `
-          <p>This is a test, not a real paid invoice.</p>
-          <p>Dear ${userInfo.name},</p>
-          <p>Thank you for your payment! Below is the paid invoice for your order:</p>
-          <p>Order ID: ${orderState._id}</p>
-          <p>Order Status is Paid: ${orderState.isPaid}</p>
-          <p>Products:</p>
-          <table border="1">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${orderState.orderItems.map((item, index) => (
-                `<tr key=${index}>
-                  <td>${item.name}</td>
-                  <td>${item.qty}</td>
-                  <td>${item.price}</td>
-                  <td>${item.qty * item.price}</td>
-                </tr>`
-              )).join('')}
-            </tbody>
-          </table>
-          <p>Total Items Price: ${orderState.itemsPrice}</p>
-          <p>Total Shipping Price: ${orderState.shippingPrice}</p>
-          <p>Total Order Price: ${orderState.totalPrice}</p>
-          <p>Payment Method: ${orderState.paymentMethod}</p>
-          <p>Order Date: ${orderState.updatedAt}</p>
-          <p>Shipping Address:</p>
-          <p>Address: ${orderState.shippingAddress.address}</p>
-          <p>City: ${orderState.shippingAddress.city}</p>
-          <p>Postal Code: ${orderState.shippingAddress.postalCode}</p>
-          <p>Country: ${orderState.shippingAddress.country}</p>
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+          <p style="color: #333; text-align: center;">This is a test. It is not a real order confirmation.</p>
+            <h2 style="color: #333; text-align: center;">Invoice</h2>
+            <p style="text-align: right; margin-bottom: 20px;">Date: ${new Date(orderState.updatedAt).toLocaleDateString()}</p>
+            <hr style="border: 1px solid #ddd;">
+
+            <h3>Order Details</h3>
+            <p><strong>Order ID:</strong> ${orderState._id}</p>
+            <p><strong>Order Status:</strong> Paid</p>
+
+            <h3>Products</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+              <thead>
+                <tr style="background-color: #f2f2f2;">
+                  <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Product</th>
+                  <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Quantity</th>
+                  <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Price</th>
+                  <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${orderState.orderItems.map((item, index) => (
+                  `<tr key=${index}>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${item.qty}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">$${item.price.toFixed(2)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">$${(item.qty * item.price).toFixed(2)}</td>
+                  </tr>`
+                )).join('')}
+              </tbody>
+            </table>
+
+            <h3>Total Summary</h3>
+            <p><strong>Items Price:</strong> $${orderState.itemsPrice.toFixed(2)}</p>
+            <p><strong>Shipping Price:</strong> $${orderState.shippingPrice.toFixed(2)}</p>
+            <p><strong>Total Order Price:</strong> $${orderState.totalPrice.toFixed(2)}</p>
+
+            <h3>Payment Details</h3>
+            <p><strong>Payment Method:</strong> ${orderState.paymentMethod}</p>
+
+            <h3>Shipping Address</h3>
+            <p><strong>Name:</strong> ${userInfo.name}</p>
+            <p><strong>Address:</strong> ${orderState.shippingAddress.address}</p>
+            <p><strong>City:</strong> ${orderState.shippingAddress.city}</p>
+            <p><strong>Postal Code:</strong> ${orderState.shippingAddress.postalCode}</p>
+            <p><strong>Country:</strong> ${orderState.shippingAddress.country}</p>
+
+            <p style="text-align: center; margin-top: 30px; color: #888;">Thank you for shopping with us!</p>
+          </div>
         `,
-      };
+            };
     }
   } catch (error) {
     console.error('Error sending paid invoice email:', error.message);

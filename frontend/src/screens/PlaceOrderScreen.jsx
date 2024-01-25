@@ -12,7 +12,7 @@ import { useCreateOrderMutation } from '../slices/ordersApiSlice';
 import { clearCartItems } from '../slices/cartSlice';
 // eslint-disable-next-line
 import { EmailOrderInfo,  } from '../components/EmailOrderInfo';
-import {useSendOrderConfirmationEmail} from '../utils/emailUtils'
+import {useSendOrderConfirmationEmail} from '../utils/emailUtils';
 
 
 const PlaceOrderScreen = () => {
@@ -76,6 +76,13 @@ const PlaceOrderScreen = () => {
 
     } catch (err) {
       toast.error(err);
+      console.log(err);
+      console.log(err.data.message);
+      if (err.data.message === 'Not Found - /login') {
+        localStorage.setItem('userInfo', JSON.stringify(null));
+        navigate('/login');
+    }
+
     }
   };
 
