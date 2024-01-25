@@ -22,7 +22,7 @@ import emailRoutes from './routes/emailRoutes.js'; // Import the emailRoutes
 
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3001;
 
 // Connect to MongoDB
 connectDB();
