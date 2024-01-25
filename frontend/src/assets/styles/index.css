@@ -166,16 +166,8 @@ main {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9); /* Adjust the shadow properties as needed */
 }
 
-/* .card-container img {
-  transition: transform 0.3s ease-in-out;
-} */
-
-/* .card-container:hover img {
-  transform: scale(1.1); /* You can adjust the scale factor as needed */
-/* } */ */
-
 .card-container .text-container {
-  padding: 1rem; /* Add padding as needed */
+  padding: 1rem;
 }
 
 .upper-div {
