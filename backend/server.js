@@ -48,7 +48,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/emails', emailRoutes);
 
 // upload pic
-app.use('/api/upload', uploadRoutes);
+app.use('/api/uploads', uploadRoutes);
 
 app.get('/api/config/paypal', (req, res) =>
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID })

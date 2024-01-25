@@ -38,7 +38,7 @@ export const productSlice = apiSlice.injectEndpoints({
     // admin upload pic builder
     uploadProductImage: builder.mutation({
       query: (data) => ({
-        url: `/api/upload`,
+        url: `/api/uploads`,
         method: 'POST',
         body: data,
       }),
