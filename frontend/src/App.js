@@ -9,20 +9,24 @@ import { logout } from './slices/authSlice';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import WhatsAppIcon from './components/WhatsappButton';
+import { useNavigate } from 'react-router-dom';
 
 
 const App = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const expirationTime = localStorage.getItem('expirationTime');
     if (expirationTime) {
       const currentTime = new Date().getTime();
-      if (currentTime > expirationTime) {
+      const parsedExpirationTime = parseInt(expirationTime, 10);
+      if (currentTime > parsedExpirationTime) {
         dispatch(logout());
+        navigate('/login');
       }
     }
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   return (
     <>
