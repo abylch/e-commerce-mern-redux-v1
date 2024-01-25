@@ -246,7 +246,8 @@ const sendPaidInvoiceEmail = asyncHandler(async (req, res) => {
     const info = await transporter.sendMail(emailContent);
 
     console.log('Paid invoice email sent successfully.');
-    res.status(200).json({ success: true, messageId: info.messageId });
+    return res.status(200).json({ success: true, messageId: info.messageId });
+    
 
     // Placeholder function for building the paid invoice email content
     function buildPaidInvoiceEmailContent(orderState, userInfo) {

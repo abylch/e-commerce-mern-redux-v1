@@ -66,7 +66,8 @@ export const useSendWelcomeEmail = () => {
         console.log("userInfo", userInfo);
   
         const response = await sendPaidInvoiceEmailMutation({ orderState, userInfo });
-  
+        console.log("response from sendPaidInvoiceEmailMutation", response);
+        
         if (response.data.success === true) {
           toast.success('Paid Invoice Email Sent!');
           return response.data.success;
