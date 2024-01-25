@@ -31,14 +31,14 @@
         "@types/express": "^4.17.17",
         "concurrently": "^7.6.0",
         "markdown-toc": "^1.2.0",
-        "nodemon": "^2.0.21"
+        "nodemon": "^3.0.3"
     },
     "optimization": {
-      "scripts": true,
-      "styles": {
-         "minify": false,
-         "inlineCritical": false
-      },
-      "fonts": true
+        "scripts": true,
+        "styles": {
+            "minify": false,
+            "inlineCritical": false
+        },
+        "fonts": true
     }
 }
