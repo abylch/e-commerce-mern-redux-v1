@@ -3,6 +3,14 @@ import { apiSlice } from './apiSlice';
 
 export const productSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // useGetAllProductsQuery func get all products no pagination
+    getAllProducts: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/all`,
+        method: 'GET',
+      }),keepUnusedDataFor: 5,
+      providesTags: ['Product'],
+    }),
     // useGetProductsQuery func
     getProducts: builder.query({
       query: ({ keyword, pageNumber }) => ({
@@ -78,4 +86,4 @@ export const productSlice = apiSlice.injectEndpoints({
 
 export const { useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation, 
   useUpdateProductMutation, useUploadProductImageMutation, useDeleteProductMutation,
-  useCreateReviewMutation, useGetTopProductsQuery, useUpdateProductCountInStockMutation, } = productSlice;
+  useCreateReviewMutation, useGetTopProductsQuery, useUpdateProductCountInStockMutation, useGetAllProductsQuery, } = productSlice;

@@ -28,6 +28,9 @@ import Message from '../components/Message';
 import { addToCart } from '../slices/cartSlice';
 import { toast } from 'react-toastify';
 import Meta from '../components/Meta';
+//related products
+import RelatedProducts from '../components/RelatedProducts';
+
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -172,6 +175,12 @@ const submitHandler = async (e) => {
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
+            </Col>
+          </Row>
+          {/* related products */}
+          <Row>
+            <Col md={12}>
+              <RelatedProducts currentProductId={product._id} related={product.related} />
             </Col>
           </Row>
           {/* review and comment placeholder */}

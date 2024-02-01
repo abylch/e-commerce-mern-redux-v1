@@ -72,6 +72,14 @@ const productSchema = mongoose.Schema(
         type: Boolean,
         default: true,
     },
+    related: {
+        type: String,
+        default: null,
+    },
+    archiveItem: {
+        type: Boolean,
+        default: false,
+    },
 },
     { timestamps: true,}
 );

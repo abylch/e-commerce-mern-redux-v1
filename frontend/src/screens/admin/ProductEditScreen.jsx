@@ -21,6 +21,10 @@ const ProductEditScreen = () => {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [displayItem, setDisplayItem] = useState(true);
+  const [related, setRelated] = useState(null);
+  const [archiveItem, setArchiveItem] = useState(false);
 
   const {
     data: product,
@@ -47,6 +51,10 @@ const ProductEditScreen = () => {
         category,
         description,
         countInStock,
+        isFeatured,
+        displayItem,
+        related,
+        archiveItem,
       });
       toast.success('product updated successfully');
       refetch();
@@ -65,6 +73,10 @@ const ProductEditScreen = () => {
       setCategory(product.category);
       setCountInStock(product.countInStock);
       setDescription(product.description);
+      setIsFeatured(product.isFeatured);
+      setDisplayItem(product.displayItem);
+      setRelated(product.related);
+      setArchiveItem(product.archiveItem);
     }
   }, [product]);
 
@@ -170,6 +182,43 @@ const ProductEditScreen = () => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></Form.Control>
+            </Form.Group>
+
+            <Form.Group className='my-2' controlId='isFeatured'>
+              <Form.Check
+                type='checkbox'
+                label='is Featured in carrousel'
+                checked={isFeatured}
+                onChange={(e) => setIsFeatured(e.target.checked)}
+              ></Form.Check>
+            </Form.Group>
+
+            <Form.Group className='my-2' controlId='displayItem'>
+              <Form.Check
+                type='checkbox'
+                label='Display Item in HomeScreen'
+                checked={displayItem}
+                onChange={(e) => setDisplayItem(e.target.checked)}
+              ></Form.Check>
+            </Form.Group>
+
+            <Form.Group controlId='related'>
+              <Form.Label>Related items</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='set related keyword, if any'
+                value={related}
+                onChange={(e) => setRelated(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group className='my-2' controlId='archiveItem'>
+              <Form.Check
+                type='checkbox'
+                checked={archiveItem}
+                label='archive item and dont display it in store'
+                onChange={(e) => setArchiveItem(e.target.checked)}
+              ></Form.Check>
             </Form.Group>
 
             <Button

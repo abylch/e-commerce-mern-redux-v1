@@ -9,7 +9,8 @@ import {
     deleteProduct,
     createProductReview,
     getTopProducts,
-    updateStockOnOrderPayment
+    updateStockOnOrderPayment,
+    getAllProducts
   } from '../controllers/productController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 import checkObjectId from '../middleware/checkObjectId.js';
@@ -18,6 +19,7 @@ import checkObjectId from '../middleware/checkObjectId.js';
 
 
 router.route('/').get(getProducts).post(protect, admin, createProduct);
+router.route('/all').get(getAllProducts);
 
 // priority before :id
 router.get('/top', getTopProducts);
