@@ -8,7 +8,7 @@
 // import axios from 'axios';
 
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
@@ -33,6 +33,12 @@ import RelatedProducts from '../components/RelatedProducts';
 
 
 const ProductScreen = () => {
+// Scroll down on load
+useEffect(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}, []);
+
+
   const { id: productId } = useParams();
 
   const dispatch = useDispatch();
