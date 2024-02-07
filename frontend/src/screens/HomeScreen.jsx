@@ -80,7 +80,7 @@ const HomeScreen = () => {
       ) : (
         <>
           <h1>Products (website 4 testing only)</h1>
-          <Row>
+          <Row id='products-section'>
             {/* {products.map((product) => ( //replaced 4 pagination  */}
             {data.products.map((product) => (
               <Col className='my-3 p-3 card-container' key={product._id} sm={12} md={6} lg={4} xl={3}>

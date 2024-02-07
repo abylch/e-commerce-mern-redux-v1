@@ -77,15 +77,15 @@ function buildEmailContent(cartState, user) {
                 `<tr key=${index}>
                   <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
                   <td style="padding: 8px; border: 1px solid #ddd;">${item.qty}</td>
-                  <td style="padding: 8px; border: 1px solid #ddd;">$${item.price.toFixed(2)}</td>
-                  <td style="padding: 8px; border: 1px solid #ddd;">$${(item.qty * item.price).toFixed(2)}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">$${Number(item.price).toFixed(2)}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">$${Number(item.qty * item.price).toFixed(2)}</td>
                 </tr>`
               )).join('')}
             </tbody>
           </table>
 
           <h3>Total Summary</h3>
-          <p><strong>Items Price:</strong> $${cartState.itemsPrice.toFixed(2)}</p>
+          <p><strong>Items Price:</strong> $${Number(cartState.itemsPrice / 0.83).toFixed(2)}</p>
 
           <h3>Shipping Address</h3>
           <p><strong>Address:</strong> ${cartState.shippingAddress.address}</p>
@@ -174,17 +174,17 @@ function buildEmailContent(orderState, user) {
                 `<tr key=${index}>
                   <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
                   <td style="padding: 8px; border: 1px solid #ddd;">${item.qty}</td>
-                  <td style="padding: 8px; border: 1px solid #ddd;">$${item.price.toFixed(2)}</td>
-                  <td style="padding: 8px; border: 1px solid #ddd;">$${(item.qty * item.price).toFixed(2)}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">$${Number(item.price).toFixed(2)}</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">$${Number(item.qty * item.price).toFixed(2)}</td>
                 </tr>`
               )).join('')}
             </tbody>
           </table>
 
           <h3>Total Summary</h3>
-          <p><strong>Items Price:</strong> $${orderState.itemsPrice.toFixed(2)}</p>
-          <p><strong>Shipping Price:</strong> $${orderState.shippingPrice.toFixed(2)}</p>
-          <p><strong>Total Order Price:</strong> $${orderState.totalPrice.toFixed(2)}</p>
+          <p><strong>Items Price before Tax:</strong> $${Number(orderState.itemsPrice).toFixed(2)}</p>
+          <p><strong>Shipping Price:</strong> $${Number(orderState.shippingPrice).toFixed(2)}</p>
+          <p><strong>Total Order Price:</strong> $${Number(orderState.totalPrice).toFixed(2)}</p>
 
           <h3>Payment Details</h3>
           <p><strong>Payment Method:</strong> ${orderState.paymentMethod}</p>
@@ -240,6 +240,7 @@ const sendWelcomeEmail = asyncHandler(async (req, res) => {
         return {
             from: '"Your e-Shop-Shop" <exintraders@bylch.com>',
             to: user.email,
+            cc: 'exintraders@bylch.com',
             subject: 'Welcome to Your e-Shop-Shop!',
             text: `Hello ${user.name}, welcome to Your e-Shop-Shop! We're excited to have you on board.`,
             html: `
@@ -310,17 +311,17 @@ const sendPaidInvoiceEmail = asyncHandler(async (req, res) => {
                   `<tr key=${index}>
                     <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
                     <td style="padding: 8px; border: 1px solid #ddd;">${item.qty}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">$${item.price.toFixed(2)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">$${(item.qty * item.price).toFixed(2)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">$${Number(item.price).toFixed(2)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">$${Number(item.qty * item.price).toFixed(2)}</td>
                   </tr>`
                 )).join('')}
               </tbody>
             </table>
 
             <h3>Total Summary</h3>
-            <p><strong>Items Price:</strong> $${orderState.itemsPrice.toFixed(2)}</p>
-            <p><strong>Shipping Price:</strong> $${orderState.shippingPrice.toFixed(2)}</p>
-            <p><strong>Total Order Price:</strong> $${orderState.totalPrice.toFixed(2)}</p>
+            <p><strong>Items Price before Tax:</strong> $${Number(orderState.itemsPrice).toFixed(2)}</p>
+            <p><strong>Shipping Price:</strong> $${Number(orderState.shippingPrice).toFixed(2)}</p>
+            <p><strong>Total Order Price:</strong> $${Number(orderState.totalPrice).toFixed(2)}</p>
 
             <h3>Payment Details</h3>
             <p><strong>Payment Method:</strong> ${orderState.paymentMethod}</p>

@@ -1,7 +1,25 @@
 import { Pagination } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useEffect } from 'react';
+
+
 
 const Paginate = ({ pages, page, listType, isAdmin = false, keyword = '' }) => {
+
+  // Scroll to the 'Products' section when the page changes
+  useEffect(() => {
+    const productsSection = document.getElementById('products-section');
+    if (productsSection && page>>1) {
+      productsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    else if (productsSection && page === 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [page]);
+
   return (
     pages > 1 && (
       <Pagination>
