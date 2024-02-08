@@ -26,4 +26,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # skip uploads folder
-/uploads
+# /uploads
+# image*

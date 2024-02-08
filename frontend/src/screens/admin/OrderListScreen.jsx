@@ -7,6 +7,10 @@ import { useGetOrdersQuery } from '../../slices/ordersApiSlice';
 // for pagination 
 import { useParams } from 'react-router-dom';
 import Paginate from '../../components/Paginate';
+import { logout } from '../../slices/authSlice.js';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 const OrderListScreen = () => {
   //const { data: orders, isLoading, error } = useGetOrdersQuery();
@@ -18,6 +22,17 @@ const OrderListScreen = () => {
   const { data, isLoading, error, refetch } = useGetOrdersQuery({
     pageNumber,
   });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) {
+      // Display toast message
+      toast.error(error?.data?.message || error.error);
+      // Dispatch logout action
+      dispatch(logout());
+    }
+  }, [error, dispatch]);
 
   return (
     <>

@@ -9,7 +9,9 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { useProfileMutation } from '../slices/usersApiSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
-import { setCredentials } from '../slices/authSlice';
+import { setCredentials, logout } from '../slices/authSlice';
+
+
 
 const ProfileScreen = () => {
   const [name, setName] = useState('');
@@ -18,6 +20,7 @@ const ProfileScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
@@ -28,7 +31,16 @@ const [updateProfile, { isLoading: loadingUpdateProfile }] = useProfileMutation(
     setEmail(userInfo.email);
   }, [userInfo.email, userInfo.name]);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (error) {
+      // Display toast message
+      toast.error(error?.data?.message || error.error);
+      // Dispatch logout action
+      dispatch(logout());
+    }
+  }, [error, dispatch]);
+
+
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {

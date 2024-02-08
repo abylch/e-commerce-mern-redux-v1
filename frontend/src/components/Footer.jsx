@@ -12,6 +12,7 @@ const Footer = () => {
             <Row>
                 <Col className='text-center py-3'>
                     <p>e-Shop-Shop made by abylch &copy; {currentYear}</p>
+                    <p>@e-Shop-Shop; Redux MERN Stack skeleton, e-commerce plataform template a work in progress, always evolving.</p>
                 </Col>
             </Row>
         </Container>

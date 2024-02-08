@@ -61,7 +61,8 @@ const HomeScreen = () => {
           
           <Col className='my-3 p-3 upper-div' sm={12} md={12} lg={12} xl={9}>
           <ProductCarousel />
-          <h3>@e-Shop-Shop; Redux MERN Stack skeleton, e-commerce plataform template a work in progress, always evolving.</h3>
+          {/* moved to footer */}
+          {/* <h3>@e-Shop-Shop; Redux MERN Stack skeleton, e-commerce plataform template a work in progress, always evolving.</h3> */}
           </Col>
           <Col className='my-3 p-3 list-box-search upper-div' sm={12} md={12} lg={12} xl={3}>
             <h3>Search products by keyword:</h3>

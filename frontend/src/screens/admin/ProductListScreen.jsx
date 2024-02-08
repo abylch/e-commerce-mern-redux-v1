@@ -11,7 +11,9 @@ import {
   useCreateProductMutation,
 } from '../../slices/productsApiSlice';
 import { toast } from 'react-toastify';
-
+import { logout } from '../../slices/authSlice.js';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 const ProductListScreen = () => {
   //const { data: products, isLoading, error, } = useGetProductsQuery();
@@ -22,6 +24,16 @@ const ProductListScreen = () => {
     pageNumber,
   });
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) {
+      // Display toast message
+      toast.error(error?.data?.message || error.error);
+      // Dispatch logout action
+      dispatch(logout());
+    }
+  }, [error, dispatch]);
 
   // const deleteHandler = () => {
   //   console.log('delete');

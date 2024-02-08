@@ -9,6 +9,9 @@ import { toast } from 'react-toastify';
 // for pagination 
 import { useParams } from 'react-router-dom';
 import Paginate from '../../components/Paginate';
+import { logout } from '../../slices/authSlice.js';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 const UserListScreen = () => {
 
@@ -18,6 +21,8 @@ const UserListScreen = () => {
   const { data, isLoading, error, refetch } = useGetUsersQuery({
     pageNumber,
   });
+
+  const dispatch = useDispatch();
   
   const [deleteUser] = useDeleteUserMutation();
 
@@ -34,9 +39,20 @@ const UserListScreen = () => {
           refetch();
         } catch (err) {
           toast.error(err?.data?.message || err.error);
+          dispatch(logout());
         }
       }
   };
+
+  useEffect(() => {
+    if (error) {
+      // Display toast message
+      toast.error(error?.data?.message || error.error);
+      // Dispatch logout action
+      dispatch(logout());
+    }
+  }, [error, dispatch]);
+
 
   return (
     <>
